@@ -19,9 +19,9 @@
 		return directive;
 
 		function linkFunction(scope, element, attrs){
-			console.log(attrs);
+			console.log(element.parent().width());
 			var progressData;
-			var width = 1000;
+			var width = element.parent().width();
 			var height = 20;
 
 			var d3 = $window.d3;
@@ -37,7 +37,7 @@
 					// .orient('top');
 
 				svg = d3.select(element[0])
-					.attr('style', 'width: '+(width+2)+'px')
+					.attr('style', 'width: '+(width)+'px')
 					.append('svg')
 					.attr('class','progress')
 					.attr('width',width)
