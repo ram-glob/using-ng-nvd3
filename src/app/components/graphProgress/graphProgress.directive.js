@@ -19,9 +19,8 @@
 		return directive;
 
 		function linkFunction(scope, element, attrs){
-			console.log(attrs);
 			var progressData = scope.arrData;
-			var width = 500;
+			var width = 1100;
 			var height = 20;
 
 			var d3 = $window.d3;
@@ -30,7 +29,7 @@
 
 			var xAxis = d3.svg.axis()
 				.scale(x)
-				.orient('top');			
+				.orient('top');
 
 			var svg = d3.select(".container-bar")
 				.attr('style', 'width: '+(500+2)+'px')
@@ -61,11 +60,9 @@
 			  })
 			  .attr("height", y.rangeBand());
 
-			console.log(progressData);
-
 			scope.$watch('arrData', function(newValue, oldValue) {
 	        if (newValue){
-	        	console.log(newValue);
+
 
 	        	x.domain([0, d3.max(progressData)]).nice();
 
