@@ -21,7 +21,7 @@
 		function linkFunction(scope, element, attrs){
 			console.log(attrs);
 			var progressData = scope.arrData;
-			var width = 500;
+			var width = 1000;
 			var height = 20;
 
 			var d3 = $window.d3;
@@ -33,7 +33,7 @@
 				.orient('top');			
 
 			var svg = d3.select(".container-bar")
-				.attr('style', 'width: '+(500+2)+'px')
+				.attr('style', 'width: '+(width+2)+'px')
 				.append('svg')
 				.attr('class','progress')
 				.attr('width',width)

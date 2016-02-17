@@ -28,14 +28,8 @@
 			chart: {
                 type: 'lineChart',
                 interpolate: 'step-after',
-                height: 500,
+                height: 300,
                 color: d3.scale.category10().range(),
-                margin : {
-                    top: 20,
-                    right: 20,
-                    bottom: 60,
-                    left: 65
-                },
                 x: function(d){
                 	return d[0];
                 },
@@ -51,31 +45,58 @@
                 },
                 yAxis: {
                     tickFormat: d3.format(',d')
-                }
+                },
+                showXAxis: false
             }
 		}
 
 		vm.newOptions = {
 			chart: {
 				type: 'lineChart',
-				height: 450,
-                margin : {
-                    top: 20,
-                    right: 20,
-                    bottom: 40,
-                    left: 55
-                },
+				height: 200,
                 useInteractiveGuideline: true,
                 x: function(d){
                 	return d[0];
                 },
                 y: function(d){
                 	return d[1];
-                }
+                },
+                yAxis: {
+                    tickFormat: d3.format(',d')
+                },
+                showXAxis: false
+			}
+		}
+
+		vm.monthOptions = {
+			chart: {
+				type: 'lineChart',
+				height: 50,
+				noData: null,
+				showLegend: false,
+                x: function(d){
+                	return d[0];
+                },
+                y: function(d){
+                	return d[1];
+                },
+                xAxis: {
+                    tickFormat: function(d){
+                    	return d3.time.format("%m/%d/%y")(new Date(d))
+                    }
+                },
+                showYAxis: false
 			}
 		}
 
 		vm.data = generateData();
+
+		vm.monthData = [
+			{
+				'key': 'Series 1',
+				'values': [ [27, 0], [28, 1], [29, 2], [30, 3], [1, 4], [2, 5], [3,6], [4,7] [5,8] ]
+			}
+		];
 
 		vm.newData = [
 			{
