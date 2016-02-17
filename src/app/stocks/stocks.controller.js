@@ -10,6 +10,7 @@
 		vm.stockData;
 
 		vm.getStocks = getStocks;
+		vm.changeData = changeData;
 
 		function getStocks() {
 			$log.log('clicked');
@@ -309,7 +310,6 @@
 
 		function changeData() {
 			vm.progressData = [1, 20, 21, 22, 23, 28, 29, 30, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50];
-			console.log(vm.progressData);
 		}
 	}
 })();

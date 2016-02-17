@@ -20,64 +20,74 @@
 
 		function linkFunction(scope, element, attrs){
 			console.log(attrs);
-			var progressData = scope.arrData;
+			var progressData;
 			var width = 1000;
 			var height = 20;
 
 			var d3 = $window.d3;
-			var x = d3.scale.linear().range([0, width]);
-			var y = d3.scale.ordinal().rangeRoundBands([0, height], 0);
+			var svg;
+			var x, y;
 
-			var xAxis = d3.svg.axis()
-				.scale(x)
-				.orient('top');			
+			// define scale
+			x = d3.scale.linear().range([0, width]);
+			y = d3.scale.ordinal().rangeRoundBands([0, height], 0); // for discrete domains 
 
-			var svg = d3.select(".container-bar")
-				.attr('style', 'width: '+(width+2)+'px')
-				.append('svg')
-				.attr('class','progress')
-				.attr('width',width)
-				.attr('height',height)
-				.append('g');
+			var xAxis = d3.svg.axis() // ?
+					.scale(x);
+					// .orient('top');
 
-			x.domain([0, d3.max(progressData)]).nice();
+				svg = d3.select(element[0])
+					.attr('style', 'width: '+(width+2)+'px')
+					.append('svg')
+					.attr('class','progress')
+					.attr('width',width)
+					.attr('height',height)
+					.append('g');				
 
-			y.domain(progressData.map(function(d) {
-			  return 0;
-			}));
+			scope.$watch('arrData', function(newValue, oldValue){
 
-			svg.selectAll(".bar")
-			  .data(progressData)
-			  .enter().append("rect")
-			  .attr("class", "bar")
-			  .attr("x", function(d) {
-			    return x(d - 1);
-			  })
-			  .attr("y", function(d) {
-			    return 0;
-			  })
-			  .attr("width", function(d) {
-			    return Math.abs(x(d) - x(d - 1));
-			  })
-			  .attr("height", y.rangeBand());
+				if(newValue){
+					console.log('Value has been updated');
+					progressData = newValue;
+					// svg.selectAll('.bar').exit().transition().remove();
+					svg.selectAll('.bar').remove().transition().duration(750);
+					draw();
+				}
+			});
 
-			console.log(progressData);
+			function setChartParameters(){
 
-			scope.$watch('arrData', function(newValue, oldValue) {
-	        if (newValue){
-	        	console.log(newValue);
+				x.domain([0, d3.max(progressData)]).nice(); // sets domain scale's input domain to array of no.
 
-	        	x.domain([0, d3.max(progressData)]).nice();
+				y.domain(progressData.map(function(d) {
+				  return 0;
+				}));
+			}
 
-						y.domain(progressData.map(function(d) {
-						  return 0;
-						}));
+			function draw(){
+				console.log('draw called');
 
-						svg.selectAll(".bar")
-							.data(newValue);
-	        }
-	    });
+				setChartParameters();
 
+				svg.selectAll(".bar")
+				  .data(progressData)
+				  .enter().append("rect")
+				  .attr("class", "bar")
+				  .attr("x", function(d) {
+				    return x(d - 1);
+				  })
+				  .transition()
+				  .delay(function(d, i){
+				  	return i * 40;
+				  })
+				  .attr("y", function(d) {
+				    return 0;
+				  })
+				  .attr("width", function(d) {
+				    return Math.abs(x(d) - x(d - 1));
+				  })
+				  .attr("height", y.rangeBand())
+			}
 		}
 	}
 
