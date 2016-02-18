@@ -83,7 +83,7 @@
 				},
 				xAxis: {
 					tickFormat: function(d) {
-						return d3.time.format("%m/%d/%y")(new Date(d))
+						return d3.time.format("%d %b %y")(new Date(d))
 					}
 				},
 				showYAxis: false

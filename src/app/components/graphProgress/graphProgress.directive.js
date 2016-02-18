@@ -80,6 +80,8 @@
 				svg.selectAll("rect")
 						.data(newValue)
 						.transition()
+						.duration(1000)
+						.ease("linear")
 						.attr("x", function(d) {
 					    return x(d.start_date); // this is basically xScale
 					  })
