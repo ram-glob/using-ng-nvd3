@@ -230,20 +230,20 @@
 			]
 		}];
 
-		// vm.progressData = [
-		// 	{
-		// 		start_date: 30,
-		// 		end_date: 70
-		// 	},
-		// 	{
-		// 		start_date: 90,
-		// 		end_date: 140
-		// 	}
-		// ];
+		vm.progressData = [
+			{
+				start_date: 10,
+				end_date: 40
+			},
+			{
+				start_date: 50,
+				end_date: 100
+			}
+		];
 
-		// vm.progressData = [30, 90];
+		// vm.progressData = [ [30, 90], [120, 140] ];
 
-		vm.progressData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 20, 21, 22, 23, 28, 29, 30, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50];
+		// vm.progressData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 20, 21, 22, 23, 28, 29, 30, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50];
 
 		function generateData() {
 			return [{
@@ -322,7 +322,17 @@
 		}
 
 		function changeData() {
-			vm.progressData = [1, 20, 21, 22, 23, 28, 29, 30, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50];
+			// vm.progressData = [1, 20, 21, 22, 23, 28, 29, 30, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50];
+			vm.progressData = [
+				{
+					start_date: 14,
+					end_date: 54
+				},
+				{
+					start_date: 10,
+					end_date: 40
+				}
+			];
 		}
 	}
 })();

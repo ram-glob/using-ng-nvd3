@@ -52,12 +52,12 @@
 
 			function setChartParameters(){
 
-				// x.domain([0, d3.max(progressData, function(d){
-				// 	console.log(d.start_date);
-				// 	return d.start_date;
-				// })]).nice(); // sets domain scale's input domain to array of no.
+				x.domain([0, d3.max(progressData, function(d){
+					console.log(d.start_date);
+					return d.end_date;
+				})]).nice(); // sets domain scale's input domain to array of no.
 
-				x.domain([0, d3.max(progressData)]).nice();
+				// x.domain([0, d3.max(progressData)]).nice();
 
 				y.domain(progressData.map(function(d) {
 				  return 0;
@@ -73,35 +73,24 @@
 				  .data(progressData)
 				  .enter().append("rect")
 				  .attr("class", "bar")
-				  .attr("x", function(d) {
-				    return x(d - 1);
-				  })
-				  .attr("y", function(d) {
-				    return 0;
-				  })
-				  .attr("width", function(d) {
-				  	var _d = d.start_date;
-				  	console.log(typeof _d);
-				  	return _d;
-				    // return Math.abs(x(_d) - x(_d - 1));
-				  })
-				  .attr("height", y.rangeBand())
 			}
 
 			function reinit(newValue){
+				console.log(newValue);
 				svg.selectAll("rect")
 						.data(newValue)
 						.transition()
 						.attr("x", function(d) {
-					    return x(d - 1);
+					    return x(d.start_date); // this is basically xScale
 					  })
 					  .attr("y", function(d) {
 					    return 0;
 					  })
 					  .attr("width", function(d) {
-					    return Math.abs(x(d) - x(d - 1));
+					  	return x(d.end_date) - x(d.start_date);
+					    // return Math.abs(x(d.end_date) - x(d.start_date));
 					  })
-					  .attr("height", y.rangeBand())
+					  .attr("height", height);
 			}
 		}
 	}
