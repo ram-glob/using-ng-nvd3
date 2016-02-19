@@ -14,3 +14,15 @@
 .bar {
   fill: #44d48f;
 }
+
+.month-nvd3 .nvd3 .nv-axis line{
+	display: none;
+}
+
+.month-nvd3 .nv-line{
+	display: none;
+}
+
+.container-bar{
+	margin: 30px 0 0 50px;
+}
