@@ -10,7 +10,11 @@
 		vm.stockData;
 
 		vm.getStocks = getStocks;
+<<<<<<< HEAD
 		vm.changeData=changeData;
+=======
+		vm.changeData = changeData;
+>>>>>>> 32816451f48d21fbbe28768df4016de51bf507c9
 
 		function getStocks() {
 			$log.log('clicked');
@@ -83,7 +87,7 @@
 				},
 				xAxis: {
 					tickFormat: function(d) {
-						return d3.time.format("%m/%d/%y")(new Date(d))
+						return d3.time.format("%d %b %y")(new Date(d))
 					}
 				},
 				showYAxis: false
@@ -230,7 +234,20 @@
 			]
 		}];
 
-		vm.progressData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 20, 21, 22, 23, 28, 29, 30, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50];
+		vm.progressData = [
+			{
+				start_date: 10,
+				end_date: 40
+			},
+			{
+				start_date: 50,
+				end_date: 100
+			}
+		];
+
+		// vm.progressData = [ [30, 90], [120, 140] ];
+
+		// vm.progressData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 20, 21, 22, 23, 28, 29, 30, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50];
 
 		function generateData() {
 			return [{
@@ -309,8 +326,21 @@
 		}
 
 		function changeData() {
-			vm.progressData = [1, 20, 21, 22, 23, 28, 29, 30, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50];
-			console.log(vm.progressData);
+			// vm.progressData = [1, 20, 21, 22, 23, 28, 29, 30, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50];
+			vm.progressData = [
+				{
+					start_date: 5,
+					end_date: 15
+				},
+				{
+					start_date: 20,
+					end_date: 30
+				},
+				{
+					start_date: 50,
+					end_date: 80
+				}
+			];
 		}
 	}
 })();
