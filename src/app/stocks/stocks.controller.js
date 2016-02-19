@@ -325,12 +325,16 @@
 			// vm.progressData = [1, 20, 21, 22, 23, 28, 29, 30, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50];
 			vm.progressData = [
 				{
-					start_date: 14,
-					end_date: 54
+					start_date: 5,
+					end_date: 15
 				},
 				{
-					start_date: 10,
-					end_date: 40
+					start_date: 20,
+					end_date: 30
+				},
+				{
+					start_date: 50,
+					end_date: 80
 				}
 			];
 		}
