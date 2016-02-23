@@ -1,11 +1,18 @@
 <div class="container">
-  <nvd3 options="vm.options" data="vm.data"></nvd3>
+  <!-- <nvd3 options="vm.options" data="vm.data"></nvd3>
   <nvd3 options="vm.newOptions" data="vm.newData"></nvd3>
 
   <graph-progress data="vm.progressData"></graph-progress>
   <nvd3 class="month-nvd3" options="vm.monthOptions" data="vm.newData"></nvd3>
-  <!-- <p><a ng-click="vm.changeData()">Change Data</a></p> -->
-  <scrubber></scrubber>
+  <p><a ng-click="vm.changeData()">Change Data</a></p>
+  <scrubber></scrubber> -->
+
+  <graph-history 
+    price-data='vm.data'
+    rank-data='vm.newData'
+    availability-data='vm.newData'
+    progress-data='vm.progressData'>
+  </graph-history>
 
   <table class="table" ng-show="vm.stockData">
     <thead>
