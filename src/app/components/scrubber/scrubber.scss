@@ -1,0 +1,115 @@
+.scrubber-brush,
+.top-scrubber {
+  width: 96%;
+  height: 40px;
+  display: inline-block;
+  position: relative;
+  bottom: 0;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+.scrubber-brush {
+  margin-top: -4px;
+}
+.scrubber-brush g.scrubber_x_axis path,
+.top-scrubber g.scrubber_x_axis path,
+.scrubber-brush .x.axis path,
+.top-scrubber .x.axis path {
+  fill-opacity: 0;
+}
+.scrubber-brush {
+  // background: #eaf5f3;
+  // border: 1px solid #94e9de;
+}
+.scrubber-brush-area {
+  background: #eaf5f3;
+  border: 1px solid #94e9de;
+}
+.brushBox rect.extent,
+.brushBox .circle-point,
+.brushBox .rect-point {
+  stroke: #66ccbf;
+  fill: #7ac3ba;
+}
+.brushBox rect.extent {
+  stroke-opacity: 0.35;
+  fill-opacity: 0.35;
+  shape-rendering: crispEdges;
+}
+.top-scrubber {
+  margin-left: 25px;
+  margin-bottom: 5px;
+}
+.top-scrubber text {
+  font-size: 11px;
+}
+.top-scrubber rect.extent {
+  fill: #2828f7;
+}
+.top-scrubber circle.circle-point {
+  fill: #fc0000;
+  stroke: #000;
+  stroke-opacity: 0.5;
+}
+.top-scrubber rect.extent {
+  fill: #7ac3ba !important;
+}
+.top-scrubber circle.circle-point {
+  fill: #7ac3ba !important;
+}
+.green-button {
+  background: #836d69;
+  border-color: #836d69;
+  color: #f7f7f8;
+}
+.days-buttons {
+  margin-top: 10px;
+  margin-left: -8px;
+  margin-bottom: 10px;
+  width: 800px;
+}
+.days-buttons button {
+  margin-left: 8px;
+}
+.days-buttons .time-text span {
+  margin-right: 13px;
+  font-weight: 600;
+  color: #787878;
+}
+.grid .tick {
+  stroke: #7ac3ba;
+  opacity: 0.7;
+}
+.grid path {
+  stroke-width: 0;
+}
+.days-buttons .time-text.fixed {
+  position: fixed;
+  top: 51px;
+  left: 20px;
+  background: #f8f8ee;
+  text-align: center;
+  padding: 5px 0;
+  z-index: 10001;
+  width: 96%;
+}
+
+.scrubber {
+  margin: 20px 0 0 0;
+}
+.tick {
+  line {
+    stroke: #666;
+  }
+}
+
+.scrubber-brush-area{
+  width: 96%;
+  height: 30px;
+  display: inline-block;
+  position: relative;
+  margin: 0;
+  svg {
+    overflow: visible;
+  }
+}

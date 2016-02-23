@@ -1,10 +1,11 @@
 <div class="container">
   <nvd3 options="vm.options" data="vm.data"></nvd3>
   <nvd3 options="vm.newOptions" data="vm.newData"></nvd3>
-  <nvd3 class="month-nvd3" options="vm.monthOptions" data="vm.newData"></nvd3>
 
   <graph-progress data="vm.progressData"></graph-progress>
-  <p><a ng-click="vm.changeData()">Change Data</a></p>
+  <nvd3 class="month-nvd3" options="vm.monthOptions" data="vm.newData"></nvd3>
+  <!-- <p><a ng-click="vm.changeData()">Change Data</a></p> -->
+  <scrubber></scrubber>
 
   <table class="table" ng-show="vm.stockData">
     <thead>
