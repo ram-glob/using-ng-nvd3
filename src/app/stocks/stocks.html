@@ -1,39 +1,10 @@
 <div class="container">
-  <!-- <nvd3 options="vm.options" data="vm.data"></nvd3>
-  <nvd3 options="vm.newOptions" data="vm.newData"></nvd3>
-
-  <graph-progress data="vm.progressData"></graph-progress>
-  <nvd3 class="month-nvd3" options="vm.monthOptions" data="vm.newData"></nvd3>
-  <p><a ng-click="vm.changeData()">Change Data</a></p>
-  <scrubber></scrubber> -->
 
   <graph-history 
-    price-data='vm.data'
-    rank-data='vm.newData'
-    availability-data='vm.newData'
+    price-data='vm.priceData'
+    rank-data='vm.rankData'
+    availability-data='vm.rankData'
     progress-data='vm.progressData'>
   </graph-history>
-
-  <table class="table" ng-show="vm.stockData">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Symbol</th>
-        <th>DaysHigh</th>
-        <th>DaysLow</th>
-        <th>Change</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="stock in vm.stockData">
-        <td>{{ stock.resource.fields.name }}</td>
-        <td>{{ stock.resource.fields.symbol }}</td>
-        <td>{{ stock.resource.fields.day_high }}</td>
-        <td>{{ stock.resource.fields.day_low }}</td>
-        <td>{{ stock.resource.fields.change }}</td>
-      </tr>
-    </tbody>
-  </table>
-
 
 </div>

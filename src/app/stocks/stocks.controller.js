@@ -7,90 +7,7 @@
 
 	function StocksController($http, $log) {
 		var vm = this;
-		vm.stockData;
-
-		vm.getStocks = getStocks;
-		vm.changeData = changeData;
-
-		function getStocks() {
-			$log.log('clicked');
-			var arr = ['YHOO', 'AAPL'];
-
-			$http.post('http://localhost:3000/stocks', {
-					list: arr
-				})
-				.then(function(result) {
-					vm.stockData = result.data.list.resources;
-					$log.log(vm.stockData);
-				});
-		}
-
-		vm.options = {
-			chart: {
-				type: 'lineChart',
-				interpolate: 'step-after',
-				height: 300,
-				color: d3.scale.category10().range(),
-				x: function(d) {
-					return d[0];
-				},
-				y: function(d) {
-					return d[1];
-				},
-				useInteractiveGuideline: true,
-				duration: 500,
-				xAxis: {
-					tickFormat: function(d) {
-						return d3.time.format("%m/%d/%y")(new Date(d));
-					}
-				},
-				yAxis: {
-					tickFormat: d3.format(',d')
-				},
-				showXAxis: false
-			}
-		}
-
-		vm.newOptions = {
-			chart: {
-				type: 'lineChart',
-				height: 200,
-				useInteractiveGuideline: true,
-				x: function(d) {
-					return d[0];
-				},
-				y: function(d) {
-					return d[1];
-				},
-				yAxis: {
-					tickFormat: d3.format(',d')
-				},
-				showXAxis: false
-			}
-		}
-
-		vm.monthOptions = {
-			chart: {
-				type: 'lineChart',
-				height: 50,
-				noData: null,
-				showLegend: false,
-				x: function(d) {
-					return d[0];
-				},
-				y: function(d) {
-					return d[1];
-				},
-				xAxis: {
-					tickFormat: function(d) {
-						return d3.time.format("%d %b %y")(new Date(d))
-					}
-				},
-				showYAxis: false
-			}
-		}
-
-		vm.data = generateData();
+		vm.priceData = generateData();
 
 		vm.monthData = [{
 			'key': 'Series 1',
@@ -107,7 +24,7 @@
 			]
 		}];
 
-		vm.newData = [{
+		vm.rankData = [{
 			"key": "Series 1",
 			"values": [
 				[1025409600000, 0],
@@ -241,10 +158,6 @@
 			}
 		];
 
-		// vm.progressData = [ [30, 90], [120, 140] ];
-
-		// vm.progressData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 20, 21, 22, 23, 28, 29, 30, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50];
-
 		function generateData() {
 			return [{
 				key: "Long",
@@ -322,7 +235,6 @@
 		}
 
 		function changeData() {
-			// vm.progressData = [1, 20, 21, 22, 23, 28, 29, 30, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50];
 			vm.progressData = [
 				{
 					start_date: 5,

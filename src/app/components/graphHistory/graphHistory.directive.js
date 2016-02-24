@@ -25,8 +25,6 @@
 		function GraphHistoryController(){
 			var vm = this;
 
-			console.log(vm.priceData);
-
 			vm.priceOptions = {
 				chart: {
 					type: 'lineChart',
