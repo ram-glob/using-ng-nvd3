@@ -1,7 +1,8 @@
 <div>
-	<nvd3 options="vm.priceOptions" data="vm.priceData"></nvd3>
-	<nvd3 options="vm.rankOptions" data="vm.rankData"></nvd3>
+	<nvd3 options="vm.priceOptions" data="priceData" api="priceApi"></nvd3>
+	<a ng-click="updatePrice()">update price data</a>
+	<nvd3 options="vm.rankOptions" data="vm.rankData" api="rankApi"></nvd3>
 	<graph-progress data="vm.progressData"></graph-progress>
 	<nvd3 class="month-nvd3" options="vm.availabilityOptions" data="vm.availabilityData"></nvd3>
-	<scrubber></scrubber>
+	<scrubber start-date="{{ vm.startDate }}" end-date="{{ vm.endDate }}"></scrubber>
 </div>

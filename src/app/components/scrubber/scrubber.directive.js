@@ -1,22 +1,11 @@
 'use strict';
 
 angular.module('usingGulpNg')
-  .directive('scrubber', function() {
+  .directive('scrubber', function($timeout) {
     return {
       templateUrl: 'app/components/scrubber/scrubber.html',
       restrict: 'EA',
       link: function(scope, element, attrs) {
-
-        /**
-         * set date to zero
-         * @param date
-         */
-        function setZeroDate(dateMoment) {
-          dateMoment.set('hour', 0);
-          dateMoment.set('minute', 0)
-          dateMoment.set('second', 0);
-          dateMoment.set('millisecond', 0);
-        }
 
         /**
          * return default end date for generating label purpose
@@ -25,7 +14,6 @@ angular.module('usingGulpNg')
         function generateDefaultLabelEndDate() {
           var today = moment().utc(); // current date
           // today.add(1, 'days');
-          // setZeroDate(today);
           return today;
         }
 
@@ -33,7 +21,9 @@ angular.module('usingGulpNg')
          * generate date for effective end date, this is where brush will end
          */
         function generateEndBrushDate(labelEndDate) {
-          return moment(labelEndDate).clone().toDate(); // giving currentDate for now
+          // console.log(moment(labelEndDate));
+          return moment(labelEndDate);
+          // return moment(labelEndDate).clone().toDate(); // giving currentDate for now
         }
 
         var parentSelector = d3.select(element[0]).select('.scrubber-brush'),
@@ -48,13 +38,20 @@ angular.module('usingGulpNg')
          * based on end date, compute date range for label
          * @param endDate
          */
-        function computeDateRange(endDateM) {
+        function computeDateRange(startDate, endDateM) {
           // endDateM.toDate() => Fri Feb 19 2016 16:08:40 GMT+0530 (IST)
-          // console.log(endDateM.clone().subtract('days', numberOfDays).toDate());
+          var _startDate = moment(startDate);
+          var _endDate = moment(endDateM);
+          console.log(startDate);
+          // var sampleArr = [
+          //   _startDate.toDate(),
+          //   _endDate.toDate()
+          // ];
+
           var sampleArr = [
-            endDateM.clone().subtract('days', numberOfDays).toDate(),
-            endDateM.toDate()
-          ]
+            _startDate,
+            _endDate
+          ];
           console.log(sampleArr);
           return sampleArr;
           // returns basically [from, to] i.e. start_date to end_date
@@ -73,9 +70,9 @@ angular.module('usingGulpNg')
 
 
         numberOfDays = Math.floor(width / dayWidth);
-        console.log(numberOfDays);
+        console.log(numberOfDays, attrs.startDate);
 
-        var dateR = computeDateRange(today);
+        var dateR = computeDateRange(attrs.startDate, attrs.endDate);
 
         // total width for all the date in range, since we are doing ceiling, this may be bigger than our width
         // this means we need to move our time scale axis by difference
@@ -91,8 +88,9 @@ angular.module('usingGulpNg')
         function computeBrushDateRange() {
           // console.log(dateR); [start, end] 
           var maxDate = generateEndBrushDate(dateR[1]);
-          console.log([moment(maxDate).clone().subtract('days', 1).toDate(), maxDate]); // [18, 19]
-          return [moment(maxDate).clone().subtract('days', 7).toDate(), maxDate];
+          // console.log([moment(maxDate).clone().subtract('days', 1), maxDate]); // [18, 19]
+          return [moment(maxDate).clone().subtract('days', 7), maxDate];
+          // return [moment(maxDate).clone().subtract('days', 7).toDate(), maxDate];
         }
 
 
@@ -103,7 +101,7 @@ angular.module('usingGulpNg')
         var xAxis2 = d3.svg.axis()
           .scale(x)
           .tickFormat(function(d) {
-            console.log(dateFormat(d));
+            // console.log(dateFormat(d));
             if (dateFormat(d) == "01")
               return monthFormat(d)
             return dateFormat(d)
@@ -128,7 +126,7 @@ angular.module('usingGulpNg')
 
         var brushDateRange = computeBrushDateRange();
 
-        console.log('setting brush from:' + brushDateRange[0].toISOString() + ' to: ' + brushDateRange[1].toISOString());
+        console.log('setting brush from:' + brushDateRange[0] + ' to: ' + brushDateRange[1]);
 
 
         var brush = d3.svg.brush()
@@ -163,19 +161,50 @@ angular.module('usingGulpNg')
           .attr('width', '2')
           .attr('height', '30')
 
+        console.log(scope);
 
         function brushended() {
 
           if (!d3.event.sourceEvent) return;
 
+          console.log(brush.extent());
+
           brushDateRange = brush.extent();
+
+          // console.log(brushDateRange[0], brushDateRange[1]);
 
           d3.select(this).transition()
             .call(brush.extent(brushDateRange))
             .call(brush.event);
 
+          console.log(Date.parse(brushDateRange[0]), Date.parse(brushDateRange[0]));
+          $timeout(function(){
+            scope.priceData[3].values[0][0] = Date.parse(brushDateRange[0]);
+            scope.priceData[3].values[1][0] = Date.parse(brushDateRange[0]);
+            // console.log(scope.priceData[3].values);
+          }, 500);
+
+          console.log(brushDateRange[0]);
+
+          scope.priceApi.update();
+
+          // var _finalArr = finalArray(new Date(brushDateRange[0]), new Date(brushDateRange[1]));
+
+          // console.log(_finalArr);
+
           // notifyBrushChanges();
 
+        }
+
+
+        var arr = []; 
+        function finalArray(start, end){
+          while(start < end){
+            arr.push(start);
+            start = start + 1;
+          }
+
+          return arr;
         }
 
         /**

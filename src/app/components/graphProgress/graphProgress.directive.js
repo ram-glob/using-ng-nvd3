@@ -38,7 +38,7 @@
 				xScale = d3.scale.linear().range([0, width]);
 				yScale = d3.scale.ordinal().rangeRoundBands([0, height], 0);
 
-				xScale.domain([0, d3.max(data, function(d){
+				xScale.domain([0, d3.max(data, function(d){ // dataset
 					return d.end_date;
 				})]).nice();
 

@@ -1,0 +1,122 @@
+[
+  {
+    "date":"25-02-2006",
+    "price_history": {
+        "base_price": 100,
+  	    "retail_price": 120,
+  	    "discount": 10
+    },
+    "ranking_history": 3.2,
+    "available_history": true
+  },
+  {
+    "date":"02-01-2007",
+    "price_history": {
+        "base_price": 200,
+  	    "retail_price": 220,
+  	    "discount": 20
+    },
+    "ranking_history": 1.2,
+    "available_history": false
+  },
+  {
+    "date":"15-08-2008",
+    "price_history": {
+        "base_price": 300,
+  	    "retail_price": 320,
+  	    "discount": 30
+    },
+    "ranking_history": 2.2,
+    "available_history": true
+  },
+  {
+    "date":"13-05-2009",
+    "price_history": {
+        "base_price": 400,
+  	    "retail_price": 420,
+  	    "discount": 40
+    },
+    "ranking_history": 3.2,
+    "available_history": false
+  },
+  {
+    "date":"09-09-2013",
+    "price_history": {
+        "base_price": 500,
+  	    "retail_price": 520,
+  	    "discount": 50
+    },
+    "ranking_history": 3.2,
+    "available_history": true
+  },
+  {
+    "date":"18-11-2016",
+    "price_history": {
+        "base_price": 250,
+  	    "retail_price": 320,
+  	    "discount": 40
+    },
+    "ranking_history": 4.2,
+    "available_history": true
+  },
+  {
+    "date":"23-12-2015",
+    "price_history": {
+        "base_price": 350,
+  	    "retail_price": 120,
+  	    "discount": 50
+    },
+    "ranking_history": 1.2,
+    "available_history": false
+  },
+  {
+    "date":"24-04-2014",
+    "price_history": {
+        "base_price": 450,
+  	    "retail_price": 520,
+  	    "discount": 40
+    },
+    "ranking_history": 3.2,
+    "available_history": true
+  },
+  {
+    "date":"01-05-2012",
+    "price_history": {
+        "base_price": 150,
+  	    "retail_price": 220,
+  	    "discount": 20
+    },
+    "ranking_history": 2.2,
+    "available_history": true
+  },
+  {
+    "date":"10-07-2011",
+    "price_history": {
+        "base_price": 550,
+  	    "retail_price": 620,
+  	    "discount": 40
+    },
+    "ranking_history": 4.2,
+    "available_history": false
+  },
+  {
+    "date":"25-10-2010",
+    "price_history": {
+        "base_price": 650,
+  	    "retail_price": 720,
+  	    "discount": 30
+    },
+    "ranking_history": 5.2,
+    "available_history": false
+  },
+  {
+    "date":"30-03-2005",
+    "price_history": {
+        "base_price": 700,
+  	    "retail_price": 820,
+  	    "discount": 30
+    },
+    "ranking_history": 1.2,
+    "available_history": true
+  }
+]
