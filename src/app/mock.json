@@ -1,6 +1,6 @@
 [
   {
-    "date":"25-02-2006",
+    "date":"02-25-2006",
     "price_history": {
         "base_price": 100,
   	    "retail_price": 120,
@@ -20,7 +20,7 @@
     "available_history": false
   },
   {
-    "date":"15-08-2008",
+    "date":"08-15-2008",
     "price_history": {
         "base_price": 300,
   	    "retail_price": 320,
@@ -30,7 +30,7 @@
     "available_history": true
   },
   {
-    "date":"13-05-2009",
+    "date":"05-13-2009",
     "price_history": {
         "base_price": 400,
   	    "retail_price": 420,
@@ -50,7 +50,7 @@
     "available_history": true
   },
   {
-    "date":"18-11-2016",
+    "date":"11-18-2016",
     "price_history": {
         "base_price": 250,
   	    "retail_price": 320,
@@ -60,7 +60,7 @@
     "available_history": true
   },
   {
-    "date":"23-12-2015",
+    "date":"12-23-2015",
     "price_history": {
         "base_price": 350,
   	    "retail_price": 120,
@@ -70,7 +70,7 @@
     "available_history": false
   },
   {
-    "date":"24-04-2014",
+    "date":"04-24-2014",
     "price_history": {
         "base_price": 450,
   	    "retail_price": 520,
@@ -100,7 +100,7 @@
     "available_history": false
   },
   {
-    "date":"25-10-2010",
+    "date":"10-25-2010",
     "price_history": {
         "base_price": 650,
   	    "retail_price": 720,

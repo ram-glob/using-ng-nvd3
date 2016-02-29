@@ -5,13 +5,8 @@
 		.module('usingGulpNg')
 		.controller('StocksController', StocksController);
 
-	function StocksController($http, $log) {
+	function StocksController($http, $log, graphHistoryService) {
 		var vm = this;
-		vm.priceData = generateData();
-
-		vm.graphData = generateGraphData();
-
-		console.log(generateData());
 
 		vm.monthData = [{
 			'key': 'Series 1',
@@ -286,170 +281,23 @@
 			]
 		}];
 
-		vm.rankData = [{
-			"key": "Series 1",
-			"values": [
-				[1083297600000, 0.77078283705125],
-				[1085976000000, 1.8356366650335],
-				[1088568000000, 5.3121322073127],
-				[1091246400000, 4.9320975829662],
-				[1093924800000, 3.9835408823225],
-				[1096516800000, 6.8694685316805],
-				[1099195200000, 8.4854877428545],
-				[1101790800000, 15.933627197384],
-				[1104469200000, 15.920980069544],
-				[1107147600000, 12.478685045651],
-				[1109566800000, 17.297761889305],
-				[1112245200000, 15.247129891020],
-				[1114833600000, 11.336459046839],
-				[1117512000000, 13.298990907415],
-				[1120104000000, 16.360027000056],
-				[1122782400000, 18.527929522030],
-				[1125460800000, 22.176516738685],
-				[1128052800000, 23.309665368330],
-				[1130734800000, 21.629973409748],
-				[1133326800000, 24.186429093486]
-			]
-		}];
+		// generateProgressData();
 
-		vm.progressData = [
-			{
-				start_date: 10,
-				end_date: 40
-			},
-			{
-				start_date: 50,
-				end_date: 100
-			}
-		];		
+		// vm.rankData = [{
+		// 	"key": "Series 1",
+		// 	"values": showRanking()
+		// }];
 
-		function generateData() {
-
-			var arr = [
-				{
-					key: 'retail_price',
-					values: [
-					]
-				},
-				{
-					key: 'base_price',
-					values: [
-					]
-				},
-				{
-					key: 'discount',
-					values: [
-					]
-				}
-			]
-
-			var graphData = generateGraphData();
-			var retail_arr = [];
-			var base_arr = [];
-			var discount = [];
-
-			for(var i=0; i<graphData.length; i++){
-				// console.log(graphData[i].price_history);
-				retail_arr.push([graphData[i].date, graphData[i].price_history.retail_price]);
-				base_arr.push([graphData[i].date, graphData[i].price_history.base_price]);
-				discount.push([graphData[i].date, graphData[i].price_history.discount]);
-			}
-
-			for(var j=0;j<arr.length;j++){
-				if(arr[j].key === 'retail_price'){
-					console.log(arr[j].key);
-					arr[j].values = retail_arr;
-				}else if(arr[j].key === 'base_price'){
-					arr[j].values = base_arr;
-				}else{
-					arr[j].values = discount;
-				}
-			}
-
-			// console.log(arr);
-
-			// return arr;
-
-			return [{
-				key: "Retail Price",
-				values: [
-					[1083297600000, 2.974623048543],
-					[1085976000000, 1.7740300785979],
-					[1088568000000, 4.4681318138177],
-					[1091246400000, 7.0242541001353],
-					[1093924800000, 7.5709603667586],
-					[1096516800000, 20.612245065736],
-					[1099195200000, 21.698065237316],
-					[1101790800000, 40.501189458018],
-					[1104469200000, 50.464679413194],
-					[1107147600000, 48.917421973355],
-					[1109566800000, 63.750936549160],
-					[1112245200000, 59.072499126460],
-					[1114833600000, 43.373158880492],
-					[1117512000000, 54.490918947556],
-					[1120104000000, 56.661178852079],
-					[1122782400000, 73.450103545496],
-					[1125460800000, 71.714526354907],
-					[1128052800000, 85.221664349607],
-					[1130734800000, 77.769261392481],
-					[1133326800000, 95.966528716500]
-				]
-			}, {
-				key: "Base Price",
-				values: [
-					[1083297600000, 0.77078283705125],
-					[1085976000000, 1.8356366650335],
-					[1088568000000, 5.3121322073127],
-					[1091246400000, 4.9320975829662],
-					[1093924800000, 3.9835408823225],
-					[1096516800000, 6.8694685316805],
-					[1099195200000, 8.4854877428545],
-					[1101790800000, 15.933627197384],
-					[1104469200000, 15.920980069544],
-					[1107147600000, 12.478685045651],
-					[1109566800000, 17.297761889305],
-					[1112245200000, 15.247129891020],
-					[1114833600000, 11.336459046839],
-					[1117512000000, 13.298990907415],
-					[1120104000000, 16.360027000056],
-					[1122782400000, 18.527929522030],
-					[1125460800000, 22.176516738685],
-					[1128052800000, 23.309665368330],
-					[1130734800000, 21.629973409748],
-					[1133326800000, 24.186429093486]
-				]
-			}, {
-				key: "Discount",
-				values: [
-					[1083297600000, 1.7454058855943],
-					[1085976000000, 1.6096667436314],
-					[1088568000000, 0.8440003934950],
-					[1091246400000, 2.0921565171691],
-					[1093924800000, 1.5874194844361],
-					[1096516800000, 13.742776534056],
-					[1099195200000, 13.212577494462],
-					[1101790800000, 24.567562260634],
-					[1104469200000, 34.543699343650],
-					[1107147600000, 36.438736927704],
-					[1109566800000, 46.453174659855],
-					[1112245200000, 43.825369235440],
-					[1114833600000, 32.036699833653],
-					[1117512000000, 41.191928040141],
-					[1120104000000, 40.301151852023],
-					[1122782400000, 54.922174023466],
-					[1125460800000, 29.538009616222],
-					[1128052800000, 31.911998981277],
-					[1130734800000, 36.139287982733],
-					[1133326800000, 31.780099623014]
-				]
-			}, {
-				key: "blank",
-				values: [
-					[1083297600000, 0],
-					[1133326800000, 0]
-				]
-			}];
-		}
+		// vm.progressData = [
+		// 	{
+		// 		start_date: 10,
+		// 		end_date: 40
+		// 	},
+		// 	{
+		// 		start_date: 50,
+		// 		end_date: 100
+		// 	}
+		// ];
 
 		function changeData() {
 			vm.progressData = [
@@ -468,129 +316,60 @@
 			];
 		}
 
-		function generateGraphData(){
-			return [
-			  {
-			    date:"02-25-2006",
-			    price_history: {
-			        base_price: 100,
-			  	    retail_price: 120,
-			  	    discount: 10
-			    },
-			    ranking_history: 3.2,
-			    available_history: true
-			  },
-			  {
-			    date:"01-02-2007",
-			    price_history: {
-			        base_price: 200,
-			  	    retail_price: 220,
-			  	    discount: 20
-			    },
-			    ranking_history: 1.2,
-			    available_history: false
-			  },
-			  {
-			    date:"08-15-2008",
-			    price_history: {
-			        base_price: 300,
-			  	    retail_price: 320,
-			  	    discount: 30
-			    },
-			    ranking_history: 2.2,
-			    available_history: true
-			  },
-			  {
-			    date:"05-13-2009",
-			    price_history: {
-			        base_price: 400,
-			  	    retail_price: 420,
-			  	    discount: 40
-			    },
-			    ranking_history: 3.2,
-			    available_history: false
-			  },
-			  {
-			    date:"09-09-2013",
-			    price_history: {
-			        base_price: 500,
-			  	    retail_price: 520,
-			  	    discount: 50
-			    },
-			    ranking_history: 3.2,
-			    available_history: true
-			  },
-			  {
-			    date:"11-18-2016",
-			    price_history: {
-			        base_price: 250,
-			  	    retail_price: 320,
-			  	    discount: 40
-			    },
-			    ranking_history: 4.2,
-			    available_history: true
-			  },
-			  {
-			    date:"12-23-2015",
-			    price_history: {
-			        base_price: 350,
-			  	    retail_price: 120,
-			  	    discount: 50
-			    },
-			    ranking_history: 1.2,
-			    available_history: false
-			  },
-			  {
-			    date:"04-24-2014",
-			    price_history: {
-			        base_price: 450,
-			  	    retail_price: 520,
-			  	    discount: 40
-			    },
-			    ranking_history: 3.2,
-			    available_history: true
-			  },
-			  {
-			    date:"05-01-2012",
-			    price_history: {
-			        base_price: 150,
-			  	    retail_price: 220,
-			  	    discount: 20
-			    },
-			    ranking_history: 2.2,
-			    available_history: true
-			  },
-			  {
-			    date:"07-10-2011",
-			    price_history: {
-			        base_price: 550,
-			  	    retail_price: 620,
-			  	    discount: 40
-			    },
-			    ranking_history: 4.2,
-			    available_history: false
-			  },
-			  {
-			    date:"10-25-2010",
-			    price_history: {
-			        base_price: 650,
-			  	    retail_price: 720,
-			  	    discount: 30
-			    },
-			    ranking_history: 5.2,
-			    available_history: false
-			  },
-			  {
-			    date:"03-30-2005",
-			    price_history: {
-			        base_price: 700,
-			  	    retail_price: 820,
-			  	    discount: 30
-			    },
-			    ranking_history: 1.2,
-			    available_history: true
-			  }
-			];
+		function generateProgressData(){
+			graphHistoryService.getRandomData()
+				.then(function(result){
+					var _mock = result;
+
+					var available_arr = [];
+
+					available_arr = graphHistoryService.pluckData(result, 'available_history');
+
+					var new_arr = available_arr.filter(function(value){
+						if(value.available_history){
+							return value;
+						}
+					});
+
+					vm.progressData = new_arr;
+				});
+			// var _mock = generateRandomData();
+			// var available_arr = [];
+
+			// for(var i=0; i<_mock.length; i++){
+			// 	if(_mock[i].available_history){
+			// 		available_arr.push({ start_date: Date.parse(moment(_mock[i].date)) });
+			// 	}
+			// }
+
+			// return available_arr;
+		}
+
+		function generateRandomData(){
+			var current = moment();
+			var last = moment(current).subtract(28,'days');
+
+			var basePriceArr = _.range(0,1000,100);
+			var retailPriceArr = _.range(0,1000,150);
+			var discountArr = _.range(0,100,10);
+			
+			var mainArr = [];
+			mainArr = _.range(10);
+
+			var finalArr = _.map(_.range(10), function(element, index, list){
+				return {
+					date: moment(current).subtract(index, 'days')._d,
+					price_history: {
+						base_price: _.sample(basePriceArr),
+						retail_price: _.sample(retailPriceArr),
+						discount: _.sample(discountArr) 
+					},
+					ranking_history: _.sample(_.range(10)),
+					available_history: _.sample([true, false])
+				};
+			});
+
+			return finalArr;
 		}
 	}
 })();

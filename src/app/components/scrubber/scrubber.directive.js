@@ -88,7 +88,7 @@ angular.module('usingGulpNg')
         function computeBrushDateRange() {
           // console.log(dateR); [start, end] 
           var maxDate = generateEndBrushDate(dateR[1]);
-          // console.log([moment(maxDate).clone().subtract('days', 1), maxDate]); // [18, 19]
+          console.log([moment(maxDate).clone().subtract('days', 7), maxDate]); // [18, 19]
           return [moment(maxDate).clone().subtract('days', 7), maxDate];
           // return [moment(maxDate).clone().subtract('days', 7).toDate(), maxDate];
         }
@@ -167,26 +167,30 @@ angular.module('usingGulpNg')
 
           if (!d3.event.sourceEvent) return;
 
-          console.log(brush.extent());
 
           brushDateRange = brush.extent();
 
-          // console.log(brushDateRange[0], brushDateRange[1]);
+          var _start = moment(brushDateRange[0]);
+          var _end = moment(brushDateRange[1]);
+
+          if(_end.diff(_start,'days') > 7 || _end.diff(_start,'days') < 7){
+            _end = moment(_start).add(7, 'days');
+          }
 
           d3.select(this).transition()
-            .call(brush.extent(brushDateRange))
+            .call(brush.extent([ _start._d, _end._d ]))
             .call(brush.event);
 
-          console.log(Date.parse(brushDateRange[0]), Date.parse(brushDateRange[0]));
-          $timeout(function(){
-            scope.priceData[3].values[0][0] = Date.parse(brushDateRange[0]);
-            scope.priceData[3].values[1][0] = Date.parse(brushDateRange[0]);
+          // console.log(brushDateRange);
+          // $timeout(function(){
+            // scope.priceData[3].values[0][0] = Date.parse(brushDateRange[0]);
+            // scope.priceData[3].values[1][0] = Date.parse(brushDateRange[0]);
             // console.log(scope.priceData[3].values);
-          }, 500);
+          // }, 500);
 
-          console.log(brushDateRange[0]);
+          // console.log(_start.format(),_end.format());
 
-          scope.priceApi.update();
+          // scope.priceApi.update();
 
           // var _finalArr = finalArray(new Date(brushDateRange[0]), new Date(brushDateRange[1]));
 

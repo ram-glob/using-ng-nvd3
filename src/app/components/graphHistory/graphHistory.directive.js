@@ -9,10 +9,8 @@
 		var directive = {
 			restrict: 'E',
 			scope: {
-				priceData: '=',
-				rankData: '=',
-				availabilityData: '=',
 				progressData: '=',
+				availabilityData: '=',
 				startDate: '@',
 				endDate: '@'
 			},
@@ -24,9 +22,11 @@
 
 		return directive;
 
-		function GraphHistoryController($scope){
+		function GraphHistoryController($scope, graphHistoryService){
 			var vm = this;
-			$scope.priceData = vm.priceData;
+			generatePrice();
+			generateRanking();
+			generateProgressData();
 			$scope.updatePrice = updatePrice;
 
 			function updatePrice(){
@@ -137,14 +137,72 @@
 					},
 					xAxis: {
 						tickFormat: function(d) {
-							return d3.time.format("%d %b %y")(new Date(d))
+							return d3.time.format("%d %b")(new Date(d))
 						}
 					},
 					showYAxis: false
 				}
 			}
 
-			// $
+			function generatePrice(){
+				graphHistoryService.getRandomData()
+					.then(function(result){
+						var _mock = result;
+						var priceArr = [];
+
+						priceArr[0] = {
+							key: 'base',
+							values: graphHistoryService.pluckData(result,'base_price')
+						}
+
+						priceArr[1] = {
+							key: 'retail',
+							values: graphHistoryService.pluckData(result,'retail_price')
+						}
+
+						priceArr[2] = {
+							key: 'discount',
+							values: graphHistoryService.pluckData(result,'discount')
+						}
+						$scope.priceData = priceArr;
+					}, function(err){
+						console.log('Error ', err);
+					});
+			}
+
+			function generateRanking(){
+				graphHistoryService.getRandomData()
+					.then(function(result){
+						var _mock = result;
+						var ranking_arr = [];
+
+						ranking_arr[0] = {
+							key: 'Serie',
+							values: graphHistoryService.pluckData(result, 'ranking_history')
+						};
+						vm.rankData = ranking_arr;
+					});
+			}
+
+			function generateProgressData(){
+				graphHistoryService.getRandomData()
+					.then(function(result){
+						var _mock = result;
+
+						var available_arr = [];
+
+						available_arr = graphHistoryService.pluckData(result, 'available_history');
+
+						var new_arr = available_arr.filter(function(value){
+							if(value.available_history){
+								return value;
+							}
+						});
+
+						vm.progressData = new_arr;
+					});
+			}
+
 		}
 	}
 })();

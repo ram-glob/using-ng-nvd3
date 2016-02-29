@@ -39,7 +39,7 @@
 				yScale = d3.scale.ordinal().rangeRoundBands([0, height], 0);
 
 				xScale.domain([0, d3.max(data, function(d){ // dataset
-					return d.end_date;
+					return d.start_date;
 				})]).nice();
 
 				yScale.domain(data.map(function(d) {
@@ -77,7 +77,9 @@
 					    return xScale(d.start_date); // this is basically xScale
 					  })
 						.attr('width', function(d) {
-					  	return xScale(d.end_date) - xScale(d.start_date);
+							// console.log(d);
+							var oldDate = d.start_date;
+					  	return 20;
 					  })
 					  .attr('height', height)
 			}
