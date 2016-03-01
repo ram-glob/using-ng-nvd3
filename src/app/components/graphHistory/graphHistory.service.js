@@ -64,7 +64,7 @@
 				}else{
 					deferred.reject('Error while generating data');
 				}
-			}, 2000);
+			}, 500);
 
 			return deferred.promise;
 		}
