@@ -1,7 +1,7 @@
 <div>
-	<nvd3 options="vm.priceOptions" data="priceData" api="priceApi"></nvd3>
-	<nvd3 options="vm.rankOptions" data="rankData" api="rankApi"></nvd3>
+	<nvd3 options="priceOptions" data="priceData" api="priceApi"></nvd3>
+	<nvd3 options="rankOptions" data="rankData" api="rankApi"></nvd3>
 	<graph-progress data="progressData"></graph-progress>
-	<nvd3 class="month-nvd3" options="vm.availabilityOptions" data="rankData"></nvd3>
-	<scrubber start-date="{{ vm.startDate }}" end-date="{{ vm.endDate }}"></scrubber>
+	<nvd3 class="month-nvd3" options="availabilityOptions" data="rankData"></nvd3>
+	<scrubber start-date="{{ startDate }}"></scrubber>
 </div>

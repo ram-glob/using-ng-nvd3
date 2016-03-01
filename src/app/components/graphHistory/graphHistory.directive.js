@@ -5,30 +5,66 @@
 		.module('usingGulpNg')
 		.directive('graphHistory', graphHistory);
 
-	function graphHistory(){
+	function graphHistory(graphHistoryService){
 		var directive = {
 			restrict: 'E',
-			scope: {
-				// progressData: '=',
-				// availabilityData: '=',
-				startDate: '@',
-				endDate: '@'
-			},
 			templateUrl: 'app/components/graphHistory/graphHistory.html',
-			controller: GraphHistoryController,
-			controllerAs: 'vm',
-			bindToController: true
+			link: linkFunction,
+			scope:{
+				timerange: '=',
+				startDate: '=',
+				graphData: '=' 
+			}
 		};
 
 		return directive;
 
-		function GraphHistoryController($scope, graphHistoryService){
-			var vm = this;
-			generatePrice();
-			generateRanking();
-			generateProgressData();
+		function linkFunction(scope, element, attr){
+			console.log(scope.startDate);
+			scope.timerange=[scope.startDate,new Date()];
+			
+			scope.$watch('graphData',function(data){
+				if(!data)
+					return
 
-			vm.priceOptions = {
+				var priceArr = [];
+				var ranking_arr = [];
+				var available_arr = [];
+
+				available_arr = graphHistoryService.pluckData(data, 'available_history');
+
+				var new_arr = available_arr.filter(function(value){
+					if(value.available_history){
+						return value;
+					}
+				});
+
+				ranking_arr[0] = {
+					key: 'Serie',
+					values: graphHistoryService.pluckData(data, 'ranking_history')
+				};
+
+				priceArr[0] = {
+					key: 'base',
+					values: graphHistoryService.pluckData(data,'base_price')
+				}
+
+				priceArr[1] = {
+					key: 'retail',
+					values: graphHistoryService.pluckData(data,'retail_price')
+				}
+
+				priceArr[2] = {
+					key: 'discount',
+					values: graphHistoryService.pluckData(data,'discount')
+				}
+
+				scope.progressData = new_arr;
+				scope.rankData = ranking_arr;
+				scope.priceData = priceArr;
+			})
+
+			scope.priceOptions = {
 				chart: {
 					type: 'lineChart',
 					interpolate: 'step-after',
@@ -54,7 +90,7 @@
 				}
 			}
 
-			vm.rankOptions = {
+			scope.rankOptions = {
 				chart: {
 					type: 'lineChart',
 					height: 200,
@@ -77,7 +113,7 @@
 				}
 			}
 
-			vm.availabilityOptions = {
+			scope.availabilityOptions = {
 				chart: {
 					type: 'lineChart',
 					height: 50,
@@ -97,67 +133,6 @@
 					showYAxis: false
 				}
 			}
-
-			function generatePrice(){
-				graphHistoryService.getRandomData(10)
-					.then(function(result){
-						var _mock = result;
-						var priceArr = [];
-
-						priceArr[0] = {
-							key: 'base',
-							values: graphHistoryService.pluckData(result,'base_price')
-						}
-
-						priceArr[1] = {
-							key: 'retail',
-							values: graphHistoryService.pluckData(result,'retail_price')
-						}
-
-						priceArr[2] = {
-							key: 'discount',
-							values: graphHistoryService.pluckData(result,'discount')
-						}
-						$scope.priceData = priceArr;
-					}, function(err){
-						console.log('Error ', err);
-					});
-			}
-
-			function generateRanking(){
-				graphHistoryService.getRandomData(10)
-					.then(function(result){
-						var _mock = result;
-						var ranking_arr = [];
-
-						ranking_arr[0] = {
-							key: 'Serie',
-							values: graphHistoryService.pluckData(result, 'ranking_history')
-						};
-						$scope.rankData = ranking_arr;
-					});
-			}
-
-			function generateProgressData(){
-				graphHistoryService.getRandomData(10)
-					.then(function(result){
-						var _mock = result;
-
-						var available_arr = [];
-
-						available_arr = graphHistoryService.pluckData(result, 'available_history');
-
-						var new_arr = available_arr.filter(function(value){
-							// console.log(value);
-							if(value.available_history){
-								return value;
-							}
-						});
-
-						$scope.progressData = new_arr;
-					});
-			}
-
 		}
 	}
 })();

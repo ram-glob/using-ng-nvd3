@@ -74,12 +74,9 @@
 					.duration(300)
 					.ease('quad')
 						.attr("x", function(d) {
-							console.log(xScale(Date.parse(d.start_date)), d.start_date);
 					    return xScale(Date.parse(d.start_date)); // this is basically xScale
 					  })
 						.attr('width', function(d) {
-							// console.log(d);
-							var oldDate = d.start_date;
 					  	return 20;
 					  })
 					  .attr('height', height)
