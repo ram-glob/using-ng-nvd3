@@ -9,8 +9,8 @@
 		var directive = {
 			restrict: 'E',
 			scope: {
-				progressData: '=',
-				availabilityData: '=',
+				// progressData: '=',
+				// availabilityData: '=',
 				startDate: '@',
 				endDate: '@'
 			},
@@ -145,7 +145,7 @@
 			}
 
 			function generatePrice(){
-				graphHistoryService.getRandomData()
+				graphHistoryService.getRandomData(10)
 					.then(function(result){
 						var _mock = result;
 						var priceArr = [];
@@ -171,7 +171,7 @@
 			}
 
 			function generateRanking(){
-				graphHistoryService.getRandomData()
+				graphHistoryService.getRandomData(10)
 					.then(function(result){
 						var _mock = result;
 						var ranking_arr = [];
@@ -180,12 +180,12 @@
 							key: 'Serie',
 							values: graphHistoryService.pluckData(result, 'ranking_history')
 						};
-						vm.rankData = ranking_arr;
+						$scope.rankData = ranking_arr;
 					});
 			}
 
 			function generateProgressData(){
-				graphHistoryService.getRandomData()
+				graphHistoryService.getRandomData(10)
 					.then(function(result){
 						var _mock = result;
 
@@ -194,12 +194,13 @@
 						available_arr = graphHistoryService.pluckData(result, 'available_history');
 
 						var new_arr = available_arr.filter(function(value){
+							// console.log(value);
 							if(value.available_history){
 								return value;
 							}
 						});
 
-						vm.progressData = new_arr;
+						$scope.progressData = new_arr;
 					});
 			}
 

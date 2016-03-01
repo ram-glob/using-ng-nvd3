@@ -8,24 +8,25 @@
 	function graphHistoryService($q, $timeout){
 
 		var service = {
-			getRandomData : getRandomData,
+			getRandomData: getRandomData,
 			pluckData: pluckData
 		}
 
 		return service;
 
-		function generateRandomData(){
+		function generateRandomData(range, end_date){
 			var current = moment();
-			var last = moment(current).subtract(28,'days');
+			if(end_date){
+				current = moment(end_date);
+			}else{
+				current = moment();
+			}
 
 			var basePriceArr = _.range(0,1000,100);
 			var retailPriceArr = _.range(0,1000,150);
 			var discountArr = _.range(0,100,10);
 			
-			var mainArr = [];
-			mainArr = _.range(10);
-
-			var finalArr = _.map(_.range(10), function(element, index, list){
+			var finalArr = _.map(_.range(range), function(element, index, list){
 				return {
 					date: moment(current).subtract(index, 'days')._d,
 					price_history: {
@@ -53,9 +54,9 @@
 			})
 		}
 
-		function getRandomData(){
+		function getRandomData(range, end_date){
 			var deferred = $q.defer();
-			var data = generateRandomData();
+			var data = generateRandomData(range, end_date);
 
 			$timeout(function(){
 				if(data){
@@ -63,7 +64,7 @@
 				}else{
 					deferred.reject('Error while generating data');
 				}
-			}, 3000);
+			}, 2000);
 
 			return deferred.promise;
 		}

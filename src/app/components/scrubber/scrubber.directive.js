@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('usingGulpNg')
-  .directive('scrubber', function($timeout) {
+  .directive('scrubber', function($timeout, graphHistoryService) {
     return {
       templateUrl: 'app/components/scrubber/scrubber.html',
       restrict: 'EA',
@@ -182,11 +182,48 @@ angular.module('usingGulpNg')
             .call(brush.event);
 
           // console.log(brushDateRange);
-          // $timeout(function(){
-            // scope.priceData[3].values[0][0] = Date.parse(brushDateRange[0]);
-            // scope.priceData[3].values[1][0] = Date.parse(brushDateRange[0]);
-            // console.log(scope.priceData[3].values);
-          // }, 500);
+          $timeout(function(){
+            graphHistoryService.getRandomData(7, _end._d)
+              .then(function(result){
+                var _mock = result;
+                var priceArr = [];
+                var ranking_arr = [];
+                var available_arr = [];
+
+                console.log(result);
+
+                priceArr[0] = {
+                  key: 'base',
+                  values: graphHistoryService.pluckData(result,'base_price')
+                }
+
+                priceArr[1] = {
+                  key: 'retail',
+                  values: graphHistoryService.pluckData(result,'retail_price')
+                }
+
+                priceArr[2] = {
+                  key: 'discount',
+                  values: graphHistoryService.pluckData(result,'discount')
+                }
+                scope.priceData = priceArr;
+
+                ranking_arr[0] = {
+                  key: 'Serie',
+                  values: graphHistoryService.pluckData(result, 'ranking_history')
+                };
+
+                available_arr = graphHistoryService.pluckData(result, 'available_history');
+
+                var new_arr = available_arr.filter(function(value){
+                  if(value.available_history){
+                    return value;
+                  }
+                });
+                scope.rankData = ranking_arr;
+                scope.progressData = new_arr;
+              });
+          }, 500);
 
           // console.log(_start.format(),_end.format());
 

@@ -35,12 +35,12 @@
 			});
 
 			function setChartParameters(data){
-				xScale = d3.scale.linear().range([0, width]);
+				xScale = d3.time.scale().range([0, width]);
 				yScale = d3.scale.ordinal().rangeRoundBands([0, height], 0);
 
-				xScale.domain([0, d3.max(data, function(d){ // dataset
+				xScale.domain(d3.extent(data.map(function(d) {
 					return d.start_date;
-				})]).nice();
+				} )))
 
 				yScale.domain(data.map(function(d) {
 				  return 0;
@@ -74,7 +74,8 @@
 					.duration(300)
 					.ease('quad')
 						.attr("x", function(d) {
-					    return xScale(d.start_date); // this is basically xScale
+							console.log(xScale(Date.parse(d.start_date)), d.start_date);
+					    return xScale(Date.parse(d.start_date)); // this is basically xScale
 					  })
 						.attr('width', function(d) {
 							// console.log(d);
