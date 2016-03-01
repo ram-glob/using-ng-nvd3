@@ -12,7 +12,6 @@
 			scope: {
 				arrData: '=data'
 			},
-			template: '<div class="container-bar"></div>',
 			link: linkFunction
 		}
 
@@ -50,14 +49,12 @@
 			function drawBars(data){
 				setChartParameters(data);
 
-				var grp = d3.select('#barChart');
-
-				var bars = grp.selectAll('rect.bar')
+				var bars = svg.selectAll('rect.bar')
 											.data(data)
 
 				// enter
 				bars.enter()
-					.append('svg:rect')
+					.append('rect')
 					.attr('class', 'bar')
 					.attr('fill', '#eee')
 

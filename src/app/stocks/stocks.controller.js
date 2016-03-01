@@ -10,18 +10,18 @@
 		// $scope.startDate = new Date(2016,02,01);
 
 		$scope.startDate = Date.parse('02/01/2016');
-		var startDate = moment($scope.startDate);
-		var endDate = moment();
-		var difference = endDate.diff(startDate, 'days');
 
 		$scope.$watch('timerange',function(timerange){
-			graphHistoryService.getRandomData(difference)
+			if(timerange.length < 1)
+				return
+			console.log('gettting this timerange...............', timerange);
+			graphHistoryService.getRandomData(timerange)
 			.then(function(result){
 				$scope.graphData=result;
 			}, function(err){
 				console.log('Error ', err);
 			});
-		});
+		}, true);
 
 	}
 })();

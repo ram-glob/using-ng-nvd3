@@ -1,11 +1,11 @@
-(function(){
+(function() {
 	'use strict';
 
 	angular
 		.module('usingGulpNg')
 		.factory('graphHistoryService', graphHistoryService);
 
-	function graphHistoryService($q, $timeout){
+	function graphHistoryService($q, $timeout) {
 
 		var service = {
 			getRandomData: getRandomData,
@@ -14,25 +14,20 @@
 
 		return service;
 
-		function generateRandomData(range, end_date){
-			var current = moment();
-			if(end_date){
-				current = moment(end_date);
-			}else{
-				current = moment();
-			}
+		function generateRandomData(range) {
+			console.log(range[1]);
+			var basePriceArr = _.range(0, 1000, 100);
+			var retailPriceArr = _.range(0, 1000, 150);
+			var discountArr = _.range(0, 100, 10);
 
-			var basePriceArr = _.range(0,1000,100);
-			var retailPriceArr = _.range(0,1000,150);
-			var discountArr = _.range(0,100,10);
-			
-			var finalArr = _.map(_.range(range), function(element, index, list){
+			var finalArr = _.map(_.range(7), function(element, index, list) {
+				// console.log(moment(range[1]).subtract(index, 'days')._d)
 				return {
-					date: moment(current).subtract(index, 'days')._d,
+					date: moment(range[1]).subtract(index, 'days')._d,
 					price_history: {
 						base_price: _.sample(basePriceArr),
 						retail_price: _.sample(retailPriceArr),
-						discount: _.sample(discountArr) 
+						discount: _.sample(discountArr)
 					},
 					ranking_history: _.sample(_.range(10)),
 					available_history: _.sample([true, false])
@@ -42,26 +37,29 @@
 			return finalArr;
 		}
 
-		function pluckData(data,key){
-			return data.map(function(d){
-				if(key === 'ranking_history'){
-					return [ d.date, d.ranking_history ];
-				}else if(key === 'available_history'){
-					return { start_date: d.date,available_history: d.available_history };
-				}else{
-					return [ d.date, d.price_history[key] ];
-				}
-			})
+		function pluckData(data, key) {
+			return {
+				key: key,
+				values: data.map(function(d) {
+					if (key === 'ranking_history') {
+						return [d.date, d.ranking_history];
+					} else if (key === 'available_history') {
+						return { start_date: d.date, available_history: d.available_history };
+					} else {
+						return [d.date, d.price_history[key]];
+					}
+				})
+			};
 		}
 
-		function getRandomData(range, end_date){
+		function getRandomData(range, end_date) {
 			var deferred = $q.defer();
 			var data = generateRandomData(range, end_date);
 
-			$timeout(function(){
-				if(data){
+			$timeout(function() {
+				if (data) {
 					deferred.resolve(data);
-				}else{
+				} else {
 					deferred.reject('Error while generating data');
 				}
 			}, 500);

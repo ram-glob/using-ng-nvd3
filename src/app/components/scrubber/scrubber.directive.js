@@ -104,7 +104,7 @@ angular.module('usingGulpNg')
           })
           .orient("bottom")
           // .tickPadding(20)
-          .ticks(5)
+          .ticks(6)
           .tickSize(20);
 
         var xAxis2g = svg.append("g")
@@ -152,6 +152,14 @@ angular.module('usingGulpNg')
           .attr('width', '2')
           .attr('height', '30')
 
+
+        var changeGraph = _.debounce(function(timerange) {
+          console.log(Date.parse(timerange[0]));
+          $timeout(function(){
+            scope.timerange=[Date.parse(timerange[0]), Date.parse(timerange[1])];
+          }, 100);
+        }, 500);
+
         function brushended() {
 
           if (!d3.event.sourceEvent) return;
@@ -162,66 +170,26 @@ angular.module('usingGulpNg')
           var _start = moment(brushDateRange[0]);
           var _end = moment(brushDateRange[1]);
 
-          if(_end.diff(_start,'days') > 7 || _end.diff(_start,'days') < 7){
+          if (_end.diff(_start, 'days') > 7 || _end.diff(_start, 'days') < 7) {
             _end = moment(_start).add(7, 'days');
           }
 
           d3.select(this).transition()
-            .call(brush.extent([ _start._d, _end._d ]))
+            .call(brush.extent([_start._d, _end._d]))
             .call(brush.event);
 
           // console.log(brushDateRange);
-          var changeGraph = _.debounce(function(){
-            graphHistoryService.getRandomData(7, _end._d)
-              .then(function(result){
-                var _mock = result;
-                var priceArr = [];
-                var ranking_arr = [];
-                var available_arr = [];
 
-                console.log(result);
 
-                priceArr[0] = {
-                  key: 'base',
-                  values: graphHistoryService.pluckData(result,'base_price')
-                }
-
-                priceArr[1] = {
-                  key: 'retail',
-                  values: graphHistoryService.pluckData(result,'retail_price')
-                }
-
-                priceArr[2] = {
-                  key: 'discount',
-                  values: graphHistoryService.pluckData(result,'discount')
-                }
-                scope.priceData = priceArr;
-
-                ranking_arr[0] = {
-                  key: 'Serie',
-                  values: graphHistoryService.pluckData(result, 'ranking_history')
-                };
-
-                available_arr = graphHistoryService.pluckData(result, 'available_history');
-
-                var new_arr = available_arr.filter(function(value){
-                  if(value.available_history){
-                    return value;
-                  }
-                });
-                scope.rankData = ranking_arr;
-                scope.progressData = new_arr;
-              });
-          }, 500);
-
-          changeGraph();
+          changeGraph(brush.extent());
 
         }
 
 
-        var arr = []; 
-        function finalArray(start, end){
-          while(start < end){
+        var arr = [];
+
+        function finalArray(start, end) {
+          while (start < end) {
             arr.push(start);
             start = start + 1;
           }
