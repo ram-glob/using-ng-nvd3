@@ -7,7 +7,6 @@
 
 	function StocksController($scope, $http, $log, graphHistoryService) {
 		$scope.timerange = [];
-		// $scope.startDate = new Date(2016,02,01);
 
 		$scope.startDate = Date.parse('02/01/2016');
 

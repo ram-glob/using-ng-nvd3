@@ -9,11 +9,11 @@
   right: 0px;
 }
 .progress {
-  background-color:#44d48f;
+  background-color:#eee;
 
 }
 .bar {
-  fill: #eee;
+  fill: #44d48f;
 }
 
 .month-nvd3 .nvd3 .nv-axis line{
@@ -25,6 +25,6 @@
 }
 
 .month-nvd3 svg{
-  margin: 0 0 0 25px;
+  // margin: 0 0 0 25px;
   border-top: 1px solid #666;
 }

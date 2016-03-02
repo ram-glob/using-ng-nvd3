@@ -1,11 +1,11 @@
-(function(){
+(function() {
 	'use strict';
 
 	angular
 		.module('usingGulpNg')
 		.directive('graphProgress', graphProgress);
 
-	function graphProgress($window){
+	function graphProgress($window) {
 		var directive = {
 			restrict: 'E',
 			replace: true,
@@ -17,80 +17,57 @@
 
 		return directive;
 
-		function linkFunction(scope, element, attrs){
+		function linkFunction(scope, element, attrs) {
 			var width = element.parent().width();
 			var height = 20;
 
 			var d3 = $window.d3;
 			var svg;
-			var xScale, yScale;
 
-			init();			
+			init();
 
-			scope.$watch('arrData', function(newValue, oldValue){
-				if(newValue){
+			scope.$watch('arrData', function(newValue, oldValue) {
+				if (newValue) {
+					console.log(newValue);
+					console.log(width / newValue.length);
 					drawBars(newValue);
 				}
 			});
 
-			function setChartParameters(data){
-				xScale = d3.time.scale().range([0, width]);
-				yScale = d3.scale.ordinal().rangeRoundBands([0, height], 0);
+ 
+			function drawBars(data) {
+				var bars = svg.selectAll('rect')
+					.data(data)
 
-				xScale.domain(d3.extent(data.map(function(d) {
-					return d.start_date;
-				} )))
-
-				yScale.domain(data.map(function(d) {
-				  return 0;
-				}));
-			}
-
-			function drawBars(data){
-				setChartParameters(data);
-
-				var bars = svg.selectAll('rect.bar')
-											.data(data)
-
+				var barWidth = width / data.length;
+				
 				// enter
 				bars.enter()
 					.append('rect')
 					.attr('class', 'bar')
 					.attr('fill', '#eee')
-
-				// exit
-				bars.exit()
-					.transition()
-					.duration(300)
-					.ease('exp')
-						.attr('width', 0)
-						.remove()
+					.attr('width', barWidth)
+					.attr('x', function(d,i){
+						return i * barWidth;
+					})
+					.attr('height', height)
 
 				bars
 					.transition()
 					.duration(300)
 					.ease('quad')
-						.attr("x", function(d) {
-					    return xScale(Date.parse(d.start_date)); // this is basically xScale
-					  })
-						.attr('width', function(d) {
-					  	return 20;
-					  })
-					  .attr('height', height)
+					.style("fill-opacity", function(d) {
+						return d.available_history ? 1 : 0
+					});
 			}
 
-			function init(){
-				var xAxis = d3.svg.axis()
-					.scale(xScale);
-
+			function init() {
 				svg = d3.select(element[0])
-					.attr('style', 'width: '+(width)+'px')
+					.attr('style', 'width: ' + (width) + 'px')
 					.append('svg')
-					.attr('class','progress')
-					.attr('width',width)
-					.attr('height',height)
-					.append('g')
-					.attr('id', 'barChart');
+					.attr('class', 'progress')
+					.attr('width', width)
+					.attr('height', height)
 			}
 		}
 	}

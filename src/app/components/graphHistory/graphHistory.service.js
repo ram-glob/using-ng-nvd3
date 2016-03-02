@@ -20,7 +20,7 @@
 			var retailPriceArr = _.range(0, 1000, 150);
 			var discountArr = _.range(0, 100, 10);
 
-			var finalArr = _.map(_.range(7), function(element, index, list) {
+			var finalArr = _.map(_.range(8), function(element, index, list) {
 				// console.log(moment(range[1]).subtract(index, 'days')._d)
 				return {
 					date: moment(range[1]).subtract(index, 'days')._d,

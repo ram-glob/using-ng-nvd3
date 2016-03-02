@@ -20,35 +20,29 @@
 		return directive;
 
 		function linkFunction(scope, element, attr){
-			console.log(scope.startDate);
-			scope.timerange=[scope.startDate,Date.parse(new Date())];
+			var _start = new Date(scope.startDate);
+			_start.setHours(0,0,0,0);
+			scope.timerange=[Date.parse(_start),Date.parse(new Date())];
 			
 			scope.$watch('graphData',function(data){
 				if(!data)
 					return
 
-				console.log('changes', scope.startDate);
 				var priceArr = [];
-				var ranking_arr = [];
-				var available_arr = [];
+				var rankingArr = [];
+				var availableArr = [];
 
-				available_arr = graphHistoryService.pluckData(data, 'available_history');
-				console.log(available_arr);
-				var new_arr = available_arr.values.filter(function(value){
-					if(value.available_history){
-						return value;
-					}
-				});
-				ranking_arr[0] = graphHistoryService.pluckData(data, 'ranking_history')
-				priceArr[0] = graphHistoryService.pluckData(data,'base_price')
-				priceArr[1] = graphHistoryService.pluckData(data,'retail_price')
-				priceArr[2] = graphHistoryService.pluckData(data,'discount')
+				var newAvailableArr = graphHistoryService.pluckData(data, 'available_history').values;
 
-				scope.progressData = new_arr;
-				scope.rankData = ranking_arr;
+				rankingArr[0] = graphHistoryService.pluckData(data, 'ranking_history')
+				priceArr[0] = graphHistoryService.pluckData(data, 'base_price')
+				priceArr[1] = graphHistoryService.pluckData(data, 'retail_price')
+				priceArr[2] = graphHistoryService.pluckData(data, 'discount')
+
+				scope.availableData = newAvailableArr;
+				scope.rankData = rankingArr;
 				scope.priceData = priceArr;
-				console.log(scope.priceData[0]);
-			})
+			});
 
 			scope.priceOptions = {
 				chart: {
@@ -95,7 +89,8 @@
 					},
 					yAxis: {
 						tickFormat: d3.format(',d')
-					}
+					},
+					showXAxis: false
 				}
 			}
 

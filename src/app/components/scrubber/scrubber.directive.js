@@ -83,10 +83,8 @@ angular.module('usingGulpNg')
 
 
         function computeBrushDateRange() {
-          // console.log(dateR); [start, end] 
           var maxDate = generateEndBrushDate(dateR[1]);
           return [moment(maxDate).clone().subtract('days', 7), maxDate];
-          // return [moment(maxDate).clone().subtract('days', 7).toDate(), maxDate];
         }
 
 
@@ -97,14 +95,13 @@ angular.module('usingGulpNg')
         var xAxis2 = d3.svg.axis()
           .scale(x)
           .tickFormat(function(d) {
-            // console.log(dateFormat(d));
             if (dateFormat(d) == "01")
               return monthFormat(d)
             return dateFormat(d)
           })
           .orient("bottom")
           // .tickPadding(20)
-          .ticks(6)
+          .ticks(5)
           .tickSize(20);
 
         var xAxis2g = svg.append("g")
@@ -154,16 +151,16 @@ angular.module('usingGulpNg')
 
 
         var changeGraph = _.debounce(function(timerange) {
-          console.log(Date.parse(timerange[0]));
+          var _start = new Date(timerange[0]);
+          _start.setHours(0,0,0,0);
+
           $timeout(function(){
-            scope.timerange=[Date.parse(timerange[0]), Date.parse(timerange[1])];
+            scope.timerange=[Date.parse(_start), Date.parse(timerange[1])];
           }, 100);
         }, 500);
 
         function brushended() {
-
           if (!d3.event.sourceEvent) return;
-
 
           brushDateRange = brush.extent();
 
@@ -178,11 +175,7 @@ angular.module('usingGulpNg')
             .call(brush.extent([_start._d, _end._d]))
             .call(brush.event);
 
-          // console.log(brushDateRange);
-
-
           changeGraph(brush.extent());
-
         }
 
 
